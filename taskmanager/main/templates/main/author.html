@@ -1,0 +1,23 @@
+{% extends 'main/base.html'%}
+
+{% block title %}
+{{ title}}
+{% endblock%}
+
+
+{% block content %}
+ <h1>{{tasks.author}}</h1>
+<form method="post">
+   {% if tasks %}
+        {%for el in tasks %}
+            <div class="alert alert-warning mt-2">
+               <h3>{{el.nazvanie}} </h3>
+                <p>{{el.stin }}</p>
+            </div>
+        {%endfor%}
+    {% else %}
+<p>У нас нет записей</p>
+    {%endif%}
+</form>
+
+{% endblock%}

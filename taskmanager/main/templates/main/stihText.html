@@ -1,0 +1,20 @@
+{% extends 'main/base.html'%}
+
+{% block title %}
+{{ title}}
+{% endblock%}
+
+{% block content %}
+ <h1>{{tasks.nazvanie}}</h1>
+<form method="post">
+{% if tasks %}
+               <h3>{{tasks.stih}} </h3>
+                <p>{{tasks.author }}</p>
+
+            </div>
+    {% else %}
+<p>У нас нет записей</p>
+    {%endif%}
+</form>
+
+{% endblock%}
