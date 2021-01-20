@@ -16,7 +16,25 @@
     <select>-->
   <li><a href="{% url 'author' %}">Автор</a></li>
   <li><a href="{% url 'nazvanie' %}">Название</a></li>
-  <li><a href="{% url 'categ' %}">Категории</a></li>
+    <!--   <tr><th><label for="id_filter_by">Filter by:</label></th><td><select id="id_filter_by" name="filter_by" required>
+<option value="1" selected="selected">хокку</option>
+<option value="2">стихи-порошки</option>
+<option value="3">стихи-пирожки</option>
+           <option value="4">лимерики</option>
+           <option value="5">стихи</option>
+</select></td></tr>-->
+       <!--<label class="form-label">Фильтровать по</label>
+  <li><a href="{% url 'categ' %}">Категории</a></li>-->
+     <!--  <tr><th><label for="id_filter_by">Фильтровать по категориям:</label></th><td><select id="id_filter_by" name="filter_by" required>-->
+       <form action="PageObjects" method="post">
+           <tr><th><label for="id_filter_by">Фильтровать по категориям:</label></th><td><select id="id_filter_by" name="filter_by" required>
+           <!--<select name="filter_by">-->
+        {% for temp in choises %}
+         <option value="{{ temp.klacc }}">{{ temp.klaccName }}</option>
+    {% endfor %}
+</select>
+            <input type="submit" value="Select">
+</form>
        <li><a href="{% url 'getAll' %}">Показать все</a></li>
     <div class="invalid-feedback">
                 Пожалуйста введите существующее значение.
@@ -27,8 +45,10 @@
    {% if tasks %}
         {%for el in tasks %}
             <div class="alert alert-warning mt-2">
+                <p><a  class="p-2 text-dark" >{{el.klaccName}}</a></p>
                <h3><a  class="p-2 text-dark" >{{el.nazvanie}}</a></h3>
                 <p><a class="p-2 text-dark">{{ el.author }}</a></p>
+
                <p><pre>{{ el.stih }}</pre></p>
             </div>
         {%endfor%}

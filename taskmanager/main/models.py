@@ -26,9 +26,12 @@ class Texts(models.Model):
 
     itemID = models.AutoField(db_column='itemID', primary_key=True)
     klacc = models.ForeignKey(TextsModel, models.DO_NOTHING, db_column='klaccID')
+    #klaccName = models.ForeignKey(TextsModel,models.DO_NOTHING, db_column='klaccNmame')
+    klaccName = models.TextField(db_column='klaccNmame', unique=True)
     author = models.TextField(db_column='author', unique=True)
     nazvanie = models.TextField(db_column='nazvanie', unique=True)
     stih = models.TextField(db_column='stih', unique=True)
+
 
 
     class Meta:

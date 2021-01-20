@@ -10,8 +10,10 @@
         {% csrf_token %}
         {{form.author}}<br>
         {{form.nazvanie}}<br>
-        {{form.klacc}}<br>
-        {{form.stih}}<br>
+        {{formSecond.klacc}}<br>
+       <!-- {{form.klaccName}}<br>-->
+       <label class="form-label">Выберете номер категории:1-хокку, 2-стихи-порошки, 3-стихи пирожки, 4 - лимерики, 5-стихи </label><br>
+        {{form.stih}}
         <button type="submit" class="btn btn-success">Добавить</button>
         <span>{{error}}</span>
     </form>

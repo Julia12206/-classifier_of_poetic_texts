@@ -4,7 +4,7 @@ import sys
 #from . models import Task
 #from . models import TaskClass
 import django.core.exceptions
-from .forms import TextsForm, TextsModelForm, TextsFormSecond
+from .forms import TextsForm, TextsModelForm, TextsFormSecond, VipSp, FiltCat
 from .models import Texts, TextsModel
 from django.http import HttpResponseNotFound,JsonResponse,Http404
 #from .models import ModelUsers
@@ -23,23 +23,47 @@ def index(request):
 
     tasks = Texts.objects.all()
     count = tasks.count()
-    form = TextsForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('home')
-    else:
-        error = 'Форма была неверной'
+    choises = TextsModel.objects.all()
+
+    if request.method == 'POST':
+        answer = ''
+        answer = request.POST.get('filter_by')
+        print(answer)
+        tasks = Texts.objects.filter(klacc=answer)
+        count = tasks.count()
+
+        #return render(request,'main/index.html', {'tasks': tasks, 'count': count})
+
+    #form = TextsForm(request.POST)
+    #formSecond = FiltCat(request.POST or None)
+    # answer = ''
+    # if formSecond.is_valid():
+    #     print('форма валидная')
+    #     answer = formSecond.cleaned_data.get('filter_by')
+    #     print(answer)
+    # else:
+    #     error = 'Форма была неверной'
+    #     print(error)
+
+    # if form.is_valid():
+    #     form.save()
+    #     return redirect('home')
+    # else:
+    #     error = 'Форма была неверной'
 
 
-    form = TextsForm()
+    #form = TextsForm()
+    formSecond = FiltCat()
     context = {
         'title': 'Главная страница сайта',
         'tasks': tasks,
+        #'formSecond':formSecond,
+        'choises' : choises,
         'count' : count
 
     }
 
-    return render(request, 'main/index.html', context )
+    return render(request, 'main/index.html', context)
 
 def about( request):
 
@@ -79,17 +103,22 @@ def create(request):
     error = ''
     klaccName = ''
 
-    ClassificPredict = cl()
+   # ClassificPredict = cl()
     if request.method == 'POST':
         form = TextsForm(request.POST)
-        if form.is_valid():
+        formSecond = VipSp(request.POST)
+        #klaccName = TextsModel.objects.filter(klacc==)
+        if form.is_valid() and formSecond.is_valid():
             form.save()
+            #formSecond.save()
             return redirect('home')
         else:
             error = 'Форма была неверной'
     form = TextsForm()
-    context ={
+    formSecond = VipSp()
+    context = {
         'form': form,
+        'formSecond': formSecond,
         'error': error
         }
     return render(request, 'main/create.html', context)
@@ -97,28 +126,33 @@ def create(request):
 def categ(request):
     return render(request, 'main/categ.html')
 
-def hokky(request):
+def filterAnswer( answer):
 
-    form = TextsForm(request.POST)
+    #form = TextsForm(request.POST)
 
-    tasks = Texts.objects.filter(klacc = 1)
+    tasks = Texts.objects.filter(klacc = answer)
     count = tasks.count()
 
-    return render(request, 'main/index.html', {'tasks': tasks, 'count': count})
+    return render( 'main/index.html', {'tasks': tasks, 'count': count})
 
 def pirozky(request):
-    tasks = Texts.objects.filter(klacc = 2)
+    tasks = Texts.objects.filter(klacc = 3)
     count = tasks.count()
     return render(request, 'main/index.html', {'tasks': tasks, 'count':count})
 
 def porozky(request):
-    tasks = Texts.objects.filter(klacc = 3)
+    tasks = Texts.objects.filter(klacc = 2)
     count = tasks.count()
     return render(request, 'main/index.html', {'tasks': tasks, 'count':count})
 
 
 def limmer(request):
     tasks = Texts.objects.filter(klacc = 4)
+    count = tasks.count()
+    return render(request, 'main/index.html', {'tasks': tasks, 'count':count})
+
+def stih(request):
+    tasks = Texts.objects.filter(klacc = 5)
     count = tasks.count()
     return render(request, 'main/index.html', {'tasks': tasks, 'count':count})
 
