@@ -1,5 +1,4 @@
 from django.conf import settings
-import re
 import  string
 import numpy as np
 import pickle
@@ -16,11 +15,9 @@ class ClassificPredict:
 
 
     def TextObr(self, textAll):
-        #print(text)
         text = textAll.split("\n")
         slogy = ''
         countOfStr = len(text)
-        print(str(countOfStr)+"\n")
         znakPrep = 0
         zagLet = 0
         for m in range(countOfStr):
@@ -42,8 +39,13 @@ class ClassificPredict:
                 slogy = slogy+str(0)+" "
         if (countOfStr)>5:
             nuls = countOfStr - 5
-            for n in range(nuls):
-                slogy = slogy[:9]+" "
+            slogySp = ''
+            slogyStrip = []
+            slogyStrip = slogy.split(" ")
+            slogySrez = slogyStrip[:5]
+            for n in range(len(slogySrez)):
+                slogySp = slogySp + slogySrez[n] + " "
+            slogy = slogySp
 
         textVect = ''
         textVect = str(slogy)+str(countOfStr)+" "+str(zagLet)+" "+str(znakPrep)
